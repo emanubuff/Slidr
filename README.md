@@ -5,5 +5,5 @@ Verison 1.0
 
 Next Updates : 
 - Accept Files even when something is present in Shelf
-- X button clears the Shelf as well
+- X button clears the Shelf as well (done)
 - No more than one shelf each time 
