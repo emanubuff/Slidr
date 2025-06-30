@@ -13,6 +13,9 @@ class FileItemView: NSView, NSDraggingSource {
     textField = NSTextField(labelWithString: fileURL.lastPathComponent)
     super.init(frame: .zero)
 
+    // Register for drag and drop - but we'll be transparent to incoming drags
+    // registerForDraggedTypes([.fileURL])  // Comment this out
+
     // Thumbnail setup
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.imageScaling = .scaleProportionallyUpOrDown
@@ -53,8 +56,6 @@ class FileItemView: NSView, NSDraggingSource {
       size: size,
       scale: scale,
       representationTypes: .thumbnail
-      
-      
     )
     QLThumbnailGenerator.shared
       .generateBestRepresentation(for: req) { [weak self] thumb, _ in
@@ -74,8 +75,18 @@ class FileItemView: NSView, NSDraggingSource {
   required init?(coder: NSCoder) { fatalError() }
 
   override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
+  
   override func hitTest(_ point: NSPoint) -> NSView? {
     return bounds.contains(point) ? self : nil
+  }
+
+  // Override these methods to explicitly NOT handle drops - let them pass through
+  override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+    return []  // Don't accept any drops
+  }
+  
+  override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+    return []  // Don't accept any drops
   }
 
   override func mouseDown(with event: NSEvent) {
@@ -110,5 +121,6 @@ class FileItemView: NSView, NSDraggingSource {
   ) -> NSDragOperation {
     return [.copy, .move]
   }
-}
 
+
+}

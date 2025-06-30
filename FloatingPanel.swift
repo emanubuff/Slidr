@@ -132,6 +132,13 @@ class FloatingPanel: NSPanel, NSDraggingDestination {
   }
 
   @objc private func closePanel(_ _: Any) { close() }
+    
+    /// Combines clear-all + close into one button action
+    @objc private func closeAndClear(_ sender: Any) {
+      clearAll(sender)
+      closePanel(sender)
+    }
+
   
   @objc private func clearAll(_ _: Any) {
     fileItems.removeAll()
@@ -203,13 +210,20 @@ class FloatingPanel: NSPanel, NSDraggingDestination {
     cv.addSubview(dragArea)
     dragArea.addGestureRecognizer(NSPanGestureRecognizer(
       target: self, action: #selector(handleWindowDrag(_:))
+      
+      
+    
     ))
 
     // Close button
+        
+
+        
+
     let closeBtn = HoverButton()
     closeBtn.isBordered = false
     closeBtn.translatesAutoresizingMaskIntoConstraints = false
-    closeBtn.target = self; closeBtn.action = #selector(closePanel(_:))
+    closeBtn.target = self; closeBtn.action = #selector(closeAndClear(_:))
     closeBtn.wantsLayer = true; closeBtn.layer?.cornerRadius = 6
     closeBtn.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
     closeBtn.layer?.borderWidth = 1
