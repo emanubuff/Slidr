@@ -1,6 +1,7 @@
 # Slidr
 Shelf app for moving apps for mac OS 11+
 Verison 1.0 
+
 # Slidr
 
 Next Updates : 
